@@ -1,7 +1,15 @@
+import sys
+import os
 import hashlib
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
+
+# adding the icons and oher data file path
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 # Global variable to hold the current file path
 current_file_path = None
@@ -36,10 +44,10 @@ def validate_hash(*args):
     """
     hash_value = hash_entry.get()
     if is_valid_sha256(hash_value):
-        image = Image.open("minihashvalid.png")
+        image = Image.open(resource_path("icons/minihashvalid.png"))
         hash_status_label.configure(text="el valor hash es valido")
     else:
-        image = Image.open("minihashinvalid.png")
+        image = Image.open(resource_path("icons/minihashinvalid.png"))
         hash_status_label.configure(text="el valor hash no es invalido, revise el valor hash")
     photo = ImageTk.PhotoImage(image)
     hash_check_label.configure(image=photo)
