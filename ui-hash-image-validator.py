@@ -40,7 +40,7 @@ def validate_hash(*args):
         hash_status_label.configure(text="el valor hash es valido")
     else:
         image = Image.open("minihashinvalid.png")
-        hash_status_label.configure(text="el valor hash no es invalido")
+        hash_status_label.configure(text="el valor hash no es invalido, revise el valor hash")
     photo = ImageTk.PhotoImage(image)
     hash_check_label.configure(image=photo)
     hash_check_label.image = photo
@@ -51,26 +51,26 @@ def validate_image_hash():
     """
     global current_file_path
     if not current_file_path:
-        messagebox.showerror("Error", "Please select an image to preview before validation.")
+        messagebox.showerror("Error", "Seleccione una imagen para obtener una vista previa antes de la validación.")
         return
 
     expected_hash = hash_entry.get()
     if not expected_hash:
-        messagebox.showerror("Error", "Please enter the expected hash value.")
+        messagebox.showerror("Error", "Introduzca el valor hash publicado.")
         return
 
     image_hash = calculate_hash(current_file_path)
     if image_hash == expected_hash:
-        messagebox.showinfo("Validation Result", "Image hash is valid.")
+        messagebox.showinfo("Resultado de la validación", "El hash y la imagen son valida. imgen no alterada")
     else:
-        messagebox.showerror("Validation Result", "Image hash is not valid.")
+        messagebox.showerror("Resultado de la validación", "El hash y la imagen no es válido. imgen alterada")
 
 def show_preview():
     """
     Display the selected image in the GUI window.
     """
     global current_file_path
-    current_file_path = filedialog.askopenfilename(title="Select an image file", filetypes=[("JPEG files", "*.jpg")])
+    current_file_path = filedialog.askopenfilename(title="Seleccione un archivo de imagen", filetypes=[("JPEG files", "*.jpg")])
     if current_file_path:
         image = Image.open(current_file_path)
         image.thumbnail((400, 600))  # Resize the image to fit in the GUI window
@@ -86,11 +86,11 @@ def close_program():
 
 # Create the GUI window
 window = tk.Tk()
-window.title("Image Hash Validator")
+window.title("Validador de hash de imagen TREP")
 window.geometry("480x800")  # Set the window size to 480x800 pixels
 
 # Create widgets
-label = tk.Label(window, text="Enter the expected hash value:")
+label = tk.Label(window, text="Introduzca el valor hash publicado en TREP para el acta:")
 label.pack()
 
 hash_value = tk.StringVar()
@@ -104,16 +104,16 @@ hash_check_label.pack(side=tk.BOTTOM)  # Pack the icon to the side of the hash e
 hash_status_label = tk.Label(window, text="")
 hash_status_label.pack(side=tk.BOTTOM)  # Pack the status label to the side of the icon
 
-preview_button = tk.Button(window, text="Preview", command=show_preview)
+preview_button = tk.Button(window, text="Pre-visualizar Acta", command=show_preview)
 preview_button.pack()
 
 preview_label = tk.Label(window)
 preview_label.pack()
 
-validate_button = tk.Button(window, text="Validate", command=validate_image_hash)
+validate_button = tk.Button(window, text="Validar Acta", command=validate_image_hash)
 validate_button.pack()
 
-close_button = tk.Button(window, text="Close", command=close_program)
+close_button = tk.Button(window, text="Cerrar el programa", command=close_program)
 close_button.pack()
 
 # Run the GUI event loop
