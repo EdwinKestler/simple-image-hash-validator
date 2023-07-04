@@ -35,4 +35,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: exe
-        path: ./ui-hash-image-validator.exe
+        path: ./build/ui-hash-image-validator.exe
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: bin
+        path: ./build/ui-hash-image-validator.bin
