@@ -1,0 +1,38 @@
+name: Python GUI Application
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Python GUI With Tkinter
+      uses: Nuitka/Nuitka-Action@main
+      with:
+        nuitka-version: main
+        script-name: ui-hash-image-validator.py
+        standalone: true
+        enable-plugins: tk-inter
+        onefile: true
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: exe
+        path: ./ui-hash-image-validator.exe
